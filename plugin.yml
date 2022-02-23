@@ -1,0 +1,10 @@
+---
+name: Fishing Rod
+description: Fishing Rod for PvP, plugin for Pocketmine-MP.
+src-namespace-prefix: fishingrod
+version: 0.1-Beta
+main: fishingrod\Loader
+api: 4.2.1
+author: MXJosueDev
+website: https://github.com/MXJosueDev/FishingRod
+...
