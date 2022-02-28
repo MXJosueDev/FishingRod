@@ -1,0 +1,26 @@
+#  _____ _     _     _             ____           _ 
+# |  ___(_)___| |__ (_)_ __   __ _|  _ \ ___   __| |
+# | |_  | / __| '_ \| | '_ \ / _` | |_) / _ \ / _` |
+# |  _| | \__ \ | | | | | | | (_| |  _ < (_) | (_| |
+# |_|   |_|___/_| |_|_|_| |_|\__, |_| \_\___/ \__,_|
+#                            |___/                  
+
+---
+# For internal use, DO NOT MODIFY
+config-version: "1.0"
+
+# ------------------
+# - Item settings. -
+# ------------------
+
+# Fishing rod item.
+fishingrod-item:
+  # Ticks that delay the use of the item (Recommended in the default value to avoid spam).
+  # Default: 5
+  cooldown-ticks: 5
+  # Default: 384
+  max-durability: 384
+  # Is the item spent when used?
+  # Default: false
+  spend-with-use: false
+...
