@@ -10,14 +10,40 @@ Currently in development.
 
 Install the file named `FishingRod.phar` in the`/home/plugins/` folder, you can download this file from [Poggit](https://poggit.pmmp.io/FishingRod).
 
-
 ## Developers
 
 Please see [CONTRIBUTING](https://github.com/MXJosueDev/FishingRod/blob/main/CONTRIBUTING.md).
 
 ### API
 
-In process of writing.
+- **Get the fishing rod**
+- Plugin API method
+```php 
+<?php
+
+use fishingrod\FishingRodManager; /* Class in which the API methods are. */
+
+$damage = 0; /* Damage with which the item will be returned. */
+$count = 1; /* Number of fishing rods you want. */
+$tags = null; /* Extra tags. */
+
+/* Note: All parameters are optional and already have a default value. */
+$fishingRod = FishingRodManager::get($damage, $count, $tags); /* Final item that you can add to any inventory. */
+```
+- Pocketmine API method
+```php 
+<?php
+
+use pocketmine\item\ItemFactory; /* Class in which the API methods are.*/
+use pocketmine\item\ItemIds; /* Class where the item ID is located. */
+
+$damage = 0; /* Damage with which the item will be returned. */
+$count = 1; /* Number of fishing rods you want. */
+$tags = null; /* Extra tags. */
+
+/* Note: All parameters are optional except for the item ID and already have a default value. */
+$fishingRod = ItemFactory::getInstance()->get(ItemIds::FISHING_ROD, $damage, $count, $tags); /* Final item that you can add to any inventory. */
+```
 
 ## License
 

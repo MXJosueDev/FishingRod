@@ -44,6 +44,19 @@ class FishingRodManager {
         }, ['FishingHook'], EntityLegacyIds::FISHING_HOOK);
     }
 
+    /**
+     * Get the fishing rod
+     *
+     * @param  int              $damage Damage with which the item will be returned
+     * @param  int              $count  Number of fishing rods you want
+     * @param  CompoundTag|null $tags   Extra tags
+     * @return FishingRod
+     */
+    public static function get(int $damage = 0, int $count = 1, ?CompoundTag $tags = null): FishingRod
+    {
+        ItemFactory::get(ItemIds::FISHING_ROD, $meta, $count, $tags);
+    }
+
     public static function initConfig(): void 
     {
         Loader::getInstance()->saveResource('settings.yml');
