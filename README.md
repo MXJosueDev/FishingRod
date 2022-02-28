@@ -45,6 +45,18 @@ $tags = null; /* Extra tags. */
 $fishingRod = ItemFactory::getInstance()->get(ItemIds::FISHING_ROD, $damage, $count, $tags); /* Final item that you can add to any inventory. */
 ```
 
+- Know if a player is fishing
+```php
+<?php
+
+use fishingrod\FishingRodManager; /* Class in which the API methods are. */
+use pocketmine\Server;
+
+$player = Server::getInstance()->getPlayerExact("MXJosuepro033"); /* Player. */
+
+$isFishing = FishingRodManager::isFishing($player); /* Boolean indicating whether or not it is fishing. */
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)

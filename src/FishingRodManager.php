@@ -113,6 +113,12 @@ class FishingRodManager {
         }
     }
 
+    /**
+     * Know if a player is fishing
+     *
+     * @param  Player $player
+     * @return bool
+     */
     public static function isFishing(Player $player): bool
     {
         return isset(self::$fishing[$player->getUniqueId()->toString()]);
