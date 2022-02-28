@@ -21,6 +21,6 @@ fishingrod-item:
   # Default: 384
   max-durability: 384
   # Is the item spent when used?
-  # Default: true
-  spend-with-use: true
+  # Default: false
+  spend-with-use: false
 ...

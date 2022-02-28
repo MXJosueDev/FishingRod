@@ -15,12 +15,16 @@ namespace fishingrod;
 use fishingrod\item\FishingRod;
 use fishingrod\entity\FishingHook;
 use pocketmine\player\Player;
+use pocketmine\world\World;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\item\ItemFactory;
 use pocketmine\item\ItemIdentifier;
 use pocketmine\item\ItemIds;
 use pocketmine\entity\EntityFactory;
+use pocketmine\entity\EntityDataHelper;
+use pocketmine\data\bedrock\EntityLegacyIds;
 use pocketmine\utils\Config;
+use pocketmine\nbt\tag\CompoundTag;
 
 class FishingRodManager {
     use SingletonTrait;
@@ -35,8 +39,9 @@ class FishingRodManager {
 
         ItemFactory::getInstance()->register(new FishingRod(new ItemIdentifier(ItemIds::FISHING_ROD), 'Fishing Rod'), true);
 
-        // TODO:
-        EntityFactory::getInstance()->register();
+        EntityFactory::getInstance()->register(FishingHook::class, function(World $world, CompoundTag $nbt): FishingHook {
+            return new FishingHook(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
+        }, ['FishingHook'], EntityLegacyIds::FISHING_HOOK);
     }
 
     public static function initConfig(): void 
@@ -54,6 +59,10 @@ class FishingRodManager {
 
             rename($filePath, $newFilePath);
             Loader::getInstance()->getLogger()->notice("The configuration was out of date and was renamed to '{$newFileName}', please check and update the configurations.");
+            Loader::getInstance()->getLogger()->alert("Restarting the server...");
+
+            // Shutdown
+            Loader::getInstance()->getServer()->shutdown();
         }
     }
 
@@ -62,7 +71,6 @@ class FishingRodManager {
         return self::$config;
     }
 
-    // TODO:
     public static function getItemTicks(): int 
     {
         return self::getConfig()->get('fishingrod-item')['cooldown-ticks'];

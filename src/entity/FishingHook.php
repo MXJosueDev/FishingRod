@@ -13,18 +13,22 @@ declare(strict_types=1);
 namespace fishingrod\entity;
 
 use fishingrod\FishingRodManager;
+use fishingrod\item\FishingRod;
 use pocketmine\player\Player;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Location;
 use pocketmine\entity\projectile\Projectile;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\math\Vector3;
+use pocketmine\math\RayTraceResult;
 use pocketmine\utils\Random;
 use pocketmine\entity\EntitySizeInfo;
 use pocketmine\network\mcpe\protocol\types\entity\EntityIds;
 
 class FishingHook extends Projectile {
     public static function getNetworkTypeId(): string { return EntityIds::FISHING_HOOK; }
+
+    protected $gravity = 0.1;
 
     const MOTION_MULTIPLIER = 0.4;
 
@@ -41,14 +45,34 @@ class FishingHook extends Projectile {
         }
     }
 
+    protected function getInitialSizeInfo(): EntitySizeInfo { return new EntitySizeInfo(0.25, 0.25); }
+
+    protected function entityBaseTick(int $tickDiff = 1): bool
+    {
+        $hasUpdate = parent::entityBaseTick($tickDiff);
+        $player = $this->getOwningEntity();
+        $despawn = false;
+
+        if($player instanceof Player) {
+            if(
+                !$player->getInventory()->getItemInHand() instanceof FishingRod ||
+                !$player->isAlive() ||
+                !$player->isClosed() ||
+                $player->getLocation()->getWorld() != $this->getLocation()->getWorld()
+            ) { $despawn = true; }
+
+        } else { $despawn = true; }
+
+        if($despawn) $this->flagForDespawn();
+        return $hasUpdate;
+    }
+
     public function flagForDespawn(): void
     {
         parent::flagForDespawn();
 
-        FishingRodManager::unsetFishing($this->getOwningEntity());
+        if($this->getOwningEntity() instanceof Player) FishingRodManager::unsetFishing($this->getOwningEntity());
     }
-
-    protected function getInitialSizeInfo(): EntitySizeInfo { return new EntitySizeInfo(0.25, 0.25); }
 
     // Note: This is recycled from a plugin that is not mine. Rights to whom it corresponds.
     private function handleHookCasting(float $x, float $y, float $z, float $f1, float $f2): void

@@ -18,6 +18,7 @@ use pocketmine\player\Player;
 use pocketmine\math\Vector3;
 use pocketmine\item\Durable;
 use pocketmine\item\ItemUseResult;
+use pocketmine\entity\animation\ArmSwingAnimation;
 
 class FishingRod extends Durable {
 
@@ -48,9 +49,13 @@ class FishingRod extends Durable {
         if(!FishingRodManager::isFishing($player)) {
             $hook = new FishingHook($player->getLocation(), $player);
             $hook->spawnToAll();
+
+            $this->applyDamage(1);
         } else {
             FishingRodManager::getFishingHook($player)->flagForDespawn();
         }
+
+        $player->broadcastAnimation(new ArmSwingAnimation($player));
 
         return ItemUseResult::SUCCESS();
     }
