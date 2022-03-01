@@ -53,6 +53,7 @@ class FishingHook extends Projectile {
         $player = $this->getOwningEntity();
         $despawn = false;
 
+        // Checks for automatic despawn
         if($player instanceof Player) {
             if(
                 !$player->getInventory()->getItemInHand() instanceof FishingRod ||
@@ -63,7 +64,11 @@ class FishingHook extends Projectile {
 
         } else { $despawn = true; }
 
-        if($despawn) $this->flagForDespawn();
+        if($despawn) {
+            $this->flagForDespawn();
+            $hasUpdate = true;
+        }
+
         return $hasUpdate;
     }
 
@@ -78,20 +83,20 @@ class FishingHook extends Projectile {
     private function handleHookCasting(float $x, float $y, float $z, float $f1, float $f2): void
     {
         // Calculations
-		$rand = new Random();
-		$f = sqrt($x * $x + $y * $y + $z * $z);
-		$x = $x / (float) $f;
-		$y = $y / (float) $f;
-		$z = $z / (float) $f;
-		$x = $x + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
-		$y = $y + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
-		$z = $z + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
-		$x = $x * (float) $f1;
-		$y = $y * (float) $f1;
-		$z = $z * (float) $f1;
+        $rand = new Random();
+        $f = sqrt($x * $x + $y * $y + $z * $z);
+        $x = $x / (float) $f;
+        $y = $y / (float) $f;
+        $z = $z / (float) $f;
+        $x = $x + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
+        $y = $y + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
+        $z = $z + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
+        $x = $x * (float) $f1;
+        $y = $y * (float) $f1;
+        $z = $z * (float) $f1;
 
-		$this->motion->x += $x;
-		$this->motion->y += $y;
-		$this->motion->z += $z;
-	}
+        $this->motion->x += $x;
+        $this->motion->y += $y;
+        $this->motion->z += $z;
+    }
 }

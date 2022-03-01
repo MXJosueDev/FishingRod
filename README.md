@@ -4,7 +4,7 @@ FishingRod is an open source plugin and is made for [PocketMine-MP](https://gith
 
 Note: The fishing rod is designed for PvP and not for fishing.
 
-Currently in development.
+Currently in testing.
 
 ## Installation
 

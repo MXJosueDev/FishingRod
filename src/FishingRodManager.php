@@ -101,16 +101,12 @@ class FishingRodManager {
 
     public static function setFishing(Player $player, Hook $hook): void
     {
-        if(!self::isFishing($player)) {
-            self::$fishing[$player->getUniqueId()->toString()] = $hook;
-        }
+        if(!self::isFishing($player)) self::$fishing[$player->getUniqueId()->toString()] = $hook;
     }
 
     public static function unsetFishing(Player $player)
     {
-        if(self::isFishing($player)) {
-            unset(self::$fishing[$player->getUniqueId()->toString()]);
-        }
+        if(self::isFishing($player)) unset(self::$fishing[$player->getUniqueId()->toString()]);
     }
 
     /**
