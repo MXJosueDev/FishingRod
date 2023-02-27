@@ -16,20 +16,20 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
 
 class Loader extends PluginBase {
-    use SingletonTrait;
+	use SingletonTrait;
 
-    const CONFIG_VERSION = '1.0';
+	const CONFIG_VERSION = '1.0';
 
-    public static string $configPath;
+	public static string $configPath;
 
-    public function onLoad(): void
-    {
-        self::setInstance($this);
-        self::$configPath = $this->getDataFolder() . 'settings.yml';
-    }
+	public function onLoad(): void
+	{
+		self::setInstance($this);
+		self::$configPath = $this->getDataFolder() . 'settings.yml';
+	}
 
-    public function onEnable(): void 
-    {
-        (new FishingRodManager());
-    }
+	public function onEnable(): void 
+	{
+		(new FishingRodManager());
+	}
 }

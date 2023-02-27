@@ -22,46 +22,46 @@ use pocketmine\entity\animation\ArmSwingAnimation;
 
 class FishingRod extends Durable {
 
-    public function getMaxStackSize(): int
-    {
-        return 1;
-    }
+	public function getMaxStackSize(): int
+	{
+		return 1;
+	}
 
-    public function getCooldownTicks(): int
-    {
-        return FishingRodManager::getItemTicks();
-    }
+	public function getCooldownTicks(): int
+	{
+		return FishingRodManager::getItemTicks();
+	}
 
-    public function getMaxDurability(): int
-    {
-        return FishingRodManager::getMaxDurability();
-    }
+	public function getMaxDurability(): int
+	{
+		return FishingRodManager::getMaxDurability();
+	}
 
-    public function onClickAir(Player $player, Vector3 $directionVector): ItemUseResult
-    {
-        // Check the cooldown to prevent spam abuse
-        if($player->hasItemCooldown($this)) return ItemUseResult::FAIL();
-        $player->resetItemCooldown($this);
+	public function onClickAir(Player $player, Vector3 $directionVector): ItemUseResult
+	{
+		// Check the cooldown to prevent spam abuse
+		if($player->hasItemCooldown($this)) return ItemUseResult::FAIL();
+		$player->resetItemCooldown($this);
 
-        // Can the item be spent?
-        if(!FishingRodManager::getItemSpend()) $this->setUnbreakable();
+		// Can the item be spent?
+		if(!FishingRodManager::getItemSpend()) $this->setUnbreakable();
 
-        if(!FishingRodManager::isFishing($player)) {
-            $hook = new FishingHook($player->getLocation(), $player);
-            $hook->spawnToAll();
+		if(!FishingRodManager::isFishing($player)) {
+			$hook = new FishingHook($player->getLocation(), $player);
+			$hook->spawnToAll();
 
-            $this->applyDamage(1);
-        } else {
-            FishingRodManager::getFishingHook($player)->flagForDespawn();
-        }
+			$this->applyDamage(1);
+		} else {
+			FishingRodManager::getFishingHook($player)->flagForDespawn();
+		}
 
-        $player->broadcastAnimation(new ArmSwingAnimation($player));
+		$player->broadcastAnimation(new ArmSwingAnimation($player));
 
-        return ItemUseResult::SUCCESS();
-    }
+		return ItemUseResult::SUCCESS();
+	}
 
-    public function getThrowForce(): float
-    {
-        return 0.9;
-    }
+	public function getThrowForce(): float
+	{
+		return 0.9;
+	}
 }
