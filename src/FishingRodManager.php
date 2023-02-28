@@ -37,7 +37,7 @@ class FishingRodManager {
 		self::setInstance($this);
 		self::initConfig();
 
-		ItemFactory::getInstance()->register(new FishingRod(new ItemIdentifier(ItemIds::FISHING_ROD), 'Fishing Rod'), true);
+		ItemFactory::getInstance()->register(new FishingRod(new ItemIdentifier(ItemIds::FISHING_ROD, 0), 'Fishing Rod'), true);
 
 		EntityFactory::getInstance()->register(FishingHook::class, function(World $world, CompoundTag $nbt): FishingHook {
 			return new FishingHook(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
