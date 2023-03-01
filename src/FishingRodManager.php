@@ -86,27 +86,27 @@ class FishingRodManager {
 
 	public static function getItemTicks(): int 
 	{
-		return self::getConfig()->get('fishingrod-item')['cooldown-ticks'];
+		return self::getConfig()->get('fishingrod-item')['cooldown-ticks'] ?? 5;
 	}
 
 	public static function getItemDurability(): int 
 	{
-		return self::getConfig()->get('fishingrod-item')['max-durability'];
+		return self::getConfig()->get('fishingrod-item')['max-durability'] ?? 384;
 	}
 	
 	public static function getItemSpend(): bool 
 	{
-		return self::getConfig()->get('fishingrod-item')['spend-with-use'];
+		return self::getConfig()->get('fishingrod-item')['spend-with-use'] ?? false;
 	}
 
-	public static function setFishing(Player $player, Hook $hook): void
+	public static function setFishing(Player $player, FishingHook $hook): void
 	{
-		if(!self::isFishing($player)) self::$fishing[$player->getUniqueId()->toString()] = $hook;
+		if(!self::isFishing($player)) self::$fishing[$player->getPlayerInfo()->getUsername()] = $hook;
 	}
 
 	public static function unsetFishing(Player $player)
 	{
-		if(self::isFishing($player)) unset(self::$fishing[$player->getUniqueId()->toString()]);
+		if(self::isFishing($player)) unset(self::$fishing[$player->getPlayerInfo()->getUsername()]);
 	}
 
 	/**
@@ -117,11 +117,11 @@ class FishingRodManager {
 	 */
 	public static function isFishing(Player $player): bool
 	{
-		return isset(self::$fishing[$player->getUniqueId()->toString()]);
+		return isset(self::$fishing[$player->getPlayerInfo()->getUsername()]);
 	}
 
-	public static function getFishingHook(Player $player): ?Hook
+	public static function getFishingHook(Player $player): ?FishingHook
 	{
-		return self::$fishing[$player->getUniqueId()->toString()];
+		return self::$fishing[$player->getPlayerInfo()->getUsername()];
 	}
 }

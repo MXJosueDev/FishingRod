@@ -49,11 +49,17 @@ class FishingRod extends Durable {
 		if(!FishingRodManager::isFishing($player)) {
 			$hook = new FishingHook($player->getLocation(), $player);
 			$hook->spawnToAll();
+			// FishingRodManager::setFishing($player, $hook);
+			$player->sendMessage("Hook spawned"); // Debug
 
 			$this->applyDamage(1);
 		} else {
 			FishingRodManager::getFishingHook($player)->flagForDespawn();
+			// FishingRodManager::unsetFishing($player);
+
+			$player->sendMessage("Hook despawned"); // Debug
 		}
+		$player->sendMessage("END OF EVENT"); // Debug
 
 		$player->broadcastAnimation(new ArmSwingAnimation($player));
 
