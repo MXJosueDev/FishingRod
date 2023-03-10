@@ -24,7 +24,7 @@ use pocketmine\item\VanillaItems; /* Class where the API methods are. */
 $fishingRod = VanillaItems::FISHING_ROD(); /* Final item that you can add to any inventory. */
 ```
 
-#### Know if a player is fishing
+#### **Know if a player is fishing**
 ```php
 <?php
 
