@@ -1,3 +1,4 @@
+[![](https://poggit.pmmp.io/shield.state/FishingRod)](https://poggit.pmmp.io/p/FishingRod) [![](https://poggit.pmmp.io/shield.api/FishingRod)](https://poggit.pmmp.io/p/FishingRod)
 # FishingRod
 
 FishingRod is an open source plugin and is made for [PocketMine-MP](https://github.com/pmmp/PocketMine-MP) 4.x.x.
@@ -6,7 +7,7 @@ Note: The fishing rod is designed for PvP and not for fishing.
 
 ## Installation
 
-Install the file named `FishingRod.phar` in the`/home/plugins/` folder, you can download this file from [Poggit](https://poggit.pmmp.io/FishingRod).
+Install the file named `FishingRod.phar` in the`/home/plugins/` folder, you can download this file from [Poggit](https://poggit.pmmp.io/p/FishingRod).
 
 ## Developers
 
