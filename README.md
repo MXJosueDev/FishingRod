@@ -4,8 +4,6 @@ FishingRod is an open source plugin and is made for [PocketMine-MP](https://gith
 
 Note: The fishing rod is designed for PvP and not for fishing.
 
-Currently in testing.
-
 ## Installation
 
 Install the file named `FishingRod.phar` in the`/home/plugins/` folder, you can download this file from [Poggit](https://poggit.pmmp.io/FishingRod).
@@ -16,45 +14,37 @@ Please see [CONTRIBUTING](https://github.com/MXJosueDev/FishingRod/blob/main/CON
 
 ### API
 
-- **Get the fishing rod**
+#### **Get the fishing rod**
 - Plugin API method
-```php 
-<?php
-
-use fishingrod\FishingRodManager; /* Class in which the API methods are. */
-
-$damage = 0; /* Damage with which the item will be returned. */
-$count = 1; /* Number of fishing rods you want. */
-$tags = null; /* Extra tags. */
-
-/* Note: All parameters are optional and already have a default value. */
-$fishingRod = FishingRodManager::get($damage, $count, $tags); /* Final item that you can add to any inventory. */
-```
-- Pocketmine API method
-```php 
-<?php
-
-use pocketmine\item\ItemFactory; /* Class in which the API methods are.*/
-use pocketmine\item\ItemIds; /* Class where the item ID is located. */
-
-$damage = 0; /* Damage with which the item will be returned. */
-$count = 1; /* Number of fishing rods you want. */
-$tags = null; /* Extra tags. */
-
-/* Note: All parameters are optional except for the item ID and already have a default value. */
-$fishingRod = ItemFactory::getInstance()->get(ItemIds::FISHING_ROD, $damage, $count, $tags); /* Final item that you can add to any inventory. */
-```
-
-- Know if a player is fishing
 ```php
 <?php
 
-use fishingrod\FishingRodManager; /* Class in which the API methods are. */
+use fishingrod\FishingRodManager; /* Class where the API methods are. */
+
+$damage = 0; /* Damage that will be applied to the item when it is returned. */
+
+/* Note: All parameters are optional and already have a default value. */
+$fishingRod = FishingRodManager::get($damage); /* Final item that you can add to any inventory. */
+```
+- PocketMine API method
+```php
+<?php
+
+use pocketmine\item\VanillaItems; /* Class where the API methods are. */
+
+$fishingRod = VanillaItems::FISHING_ROD(); /* Final item that you can add to any inventory. */
+```
+
+#### Know if a player is fishing
+```php
+<?php
+
+use fishingrod\FishingRodManager; /* Class where the API methods are. */
 use pocketmine\Server;
 
-$player = Server::getInstance()->getPlayerExact("MXJosuepro033"); /* Player. */
+$player = Server::getInstance()->getPlayerExact("iMXJosue"); /* Player example with instance of 'pocketmine/player/Player'. */
 
-$isFishing = FishingRodManager::isFishing($player); /* Boolean indicating whether or not it is fishing. */
+$isFishing = FishingRodManager::isFishing($player); /* Returns a boolean value indicating if the player is fishing. */
 ```
 
 ## License

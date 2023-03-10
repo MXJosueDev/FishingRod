@@ -14,12 +14,15 @@ namespace fishingrod\entity;
 
 use fishingrod\FishingRodManager;
 use fishingrod\item\FishingRod;
+use pocketmine\entity\Living;
+use pocketmine\event\entity\EntityDamageByChildEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\item\ItemIds;
 use pocketmine\player\Player;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Location;
 use pocketmine\entity\projectile\Projectile;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\math\Vector3;
 use pocketmine\math\RayTraceResult;
 use pocketmine\utils\Random;
 use pocketmine\entity\EntitySizeInfo;
@@ -28,27 +31,40 @@ use pocketmine\network\mcpe\protocol\types\entity\EntityIds;
 class FishingHook extends Projectile {
 	public static function getNetworkTypeId(): string { return EntityIds::FISHING_HOOK; }
 
-	protected $gravity = 0.1;
+	protected function getInitialSizeInfo(): EntitySizeInfo { return new EntitySizeInfo(0.25, 0.25); }
 
-	const MOTION_MULTIPLIER = 0.4;
+	protected $gravity;
 
-	public function __construct(Location $location, ?Entity $shootingEntity, ?CompoundTag $nbt = null)
-	{
+	public function __construct(Location $location, ?Entity $shootingEntity, ?CompoundTag $nbt = null) {
 		parent::__construct($location, $shootingEntity, $nbt);
-
+		$this->gravity = FishingRodManager::getGravity();
+		
 		if($shootingEntity instanceof Player) {
-			$this->setMotion($shootingEntity->getDirectionVector()->multiply(self::MOTION_MULTIPLIER));
+			$this->setMotion($shootingEntity->getDirectionVector()->multiply(FishingRodManager::getMotionMultiplier()));
 			FishingRodManager::setFishing($shootingEntity, $this);
 
 			// Note: This is recycled from a plugin that is not mine. Rights to whom it corresponds.
-			$this->handleHookCasting($this->getMotion()->x, $this->getMotion()->y, $this->getMotion()->z, 1.5, 1.0);
+			$this->handleHookCasting($this->getMotion()->getX(), $this->getMotion()->getY(), $this->getMotion()->getZ());
+		} else {
+			$this->flagForDespawn();
 		}
 	}
+	
+	public function onHitEntity(Entity $entityHit, RayTraceResult $hitResult): void {
+		$damage = $this->getResultDamage();
 
-	protected function getInitialSizeInfo(): EntitySizeInfo { return new EntitySizeInfo(0.25, 0.25); }
+		if($this->getOwningEntity() !== null) {
+			$ev = new EntityDamageByChildEntityEvent($this->getOwningEntity(), $this, $entityHit, EntityDamageEvent::CAUSE_PROJECTILE, $damage);
+			$kb = $ev->getKnockBack();
+			
+			$entityHit->attack($ev);
+		}
 
-	protected function entityBaseTick(int $tickDiff = 1): bool
-	{
+		$this->isCollided = true;
+		$this->flagForDespawn();
+	}
+
+	protected function entityBaseTick(int $tickDiff = 1): bool {
 		$hasUpdate = parent::entityBaseTick($tickDiff);
 		$player = $this->getOwningEntity();
 		$despawn = false;
@@ -56,12 +72,13 @@ class FishingHook extends Projectile {
 		// Checks for automatic despawn
 		if($player instanceof Player) {
 			if(
-				!$player->getInventory()->getItemInHand() instanceof FishingRod ||
+				$player->getInventory()->getItemInHand()->getId() !== ItemIds::FISHING_ROD ||
 				!$player->isAlive() ||
-				!$player->isClosed() ||
-				$player->getLocation()->getWorld() != $this->getLocation()->getWorld()
-			) { $despawn = true; }
-
+				$player->isClosed() ||
+				$player->getLocation()->getWorld()->getFolderName() !== $this->getLocation()->getWorld()->getFolderName()
+			) {
+				$despawn = true;
+			}
 		} else { $despawn = true; }
 
 		if($despawn) {
@@ -71,29 +88,27 @@ class FishingHook extends Projectile {
 
 		return $hasUpdate;
 	}
-
-	public function flagForDespawn(): void
-	{
-		parent::flagForDespawn();
-
+	
+	public function flagForDespawn(): void {
 		if($this->getOwningEntity() instanceof Player) FishingRodManager::unsetFishing($this->getOwningEntity());
+		parent::flagForDespawn();
 	}
-
-	// Note: This is recycled from a plugin that is not mine. Rights to whom it corresponds.
-	private function handleHookCasting(float $x, float $y, float $z, float $f1, float $f2): void
-	{
+	
+	private function handleHookCasting(float $x, float $y, float $z): void { // Note: This is recycled from a plugin that is not mine. Rights to whom it corresponds.
+		$f2 = 1.0;
+		$f1 = 1.5;
 		// Calculations
 		$rand = new Random();
 		$f = sqrt($x * $x + $y * $y + $z * $z);
-		$x = $x / (float) $f;
-		$y = $y / (float) $f;
-		$z = $z / (float) $f;
-		$x = $x + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
-		$y = $y + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
-		$z = $z + $rand->nextSignedFloat() * 0.007499999832361937 * (float) $f2;
-		$x = $x * (float) $f1;
-		$y = $y * (float) $f1;
-		$z = $z * (float) $f1;
+		$x = $x / $f;
+		$y = $y / $f;
+		$z = $z / $f;
+		$x = $x + $rand->nextSignedFloat() * 0.007499999832361937;
+		$y = $y + $rand->nextSignedFloat() * 0.007499999832361937 * $f2;
+		$z = $z + $rand->nextSignedFloat() * 0.007499999832361937 * $f2;
+		$x = $x * 1.5;
+		$y = $y * $f1;
+		$z = $z * $f1;
 
 		$this->motion->x += $x;
 		$this->motion->y += $y;

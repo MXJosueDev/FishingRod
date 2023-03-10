@@ -7,7 +7,7 @@
 
 ---
 # For internal use, DO NOT MODIFY
-config-version: "1.0"
+config-version: "1.1"
 
 # ------------------
 # - Item settings. -
@@ -15,12 +15,21 @@ config-version: "1.0"
 
 # Fishing rod item.
 fishingrod-item:
-  # Ticks that delay the use of the item (Recommended in the default value to avoid spam).
-  # Default: 5
-  cooldown-ticks: 5
+  # Ticks that delay the use of the item. (Recommended in the default value to avoid spam)
+  # Default: 8
+  cooldown-ticks: 8
   # Default: 384
   max-durability: 384
   # Is the item spent when used?
   # Default: false
   spend-with-use: false
+
+# Fishing rod hook. (Entity)
+fishingrod-hook:
+  # It's the force with which the hook falls.
+  # Default: 0.1
+  gravity: 0.1
+  # It is the force with which the hook is thrown.
+  # Default: 0.4
+  motion-multiplier: 0.4
 ...

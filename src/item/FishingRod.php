@@ -14,6 +14,7 @@ namespace fishingrod\item;
 
 use fishingrod\FishingRodManager;
 use fishingrod\entity\FishingHook;
+use pocketmine\entity\Location;
 use pocketmine\player\Player;
 use pocketmine\math\Vector3;
 use pocketmine\item\Durable;
@@ -22,24 +23,20 @@ use pocketmine\entity\animation\ArmSwingAnimation;
 
 class FishingRod extends Durable {
 
-	public function getMaxStackSize(): int
-	{
+	public function getMaxStackSize(): int {
 		return 1;
 	}
 
-	public function getCooldownTicks(): int
-	{
+	public function getCooldownTicks(): int {
 		return FishingRodManager::getItemTicks();
 	}
 
-	public function getMaxDurability(): int
-	{
-		return FishingRodManager::getMaxDurability();
+	public function getMaxDurability(): int {
+		return FishingRodManager::getItemDurability();
 	}
 
-	public function onClickAir(Player $player, Vector3 $directionVector): ItemUseResult
-	{
-		// Check the cooldown to prevent spam abuse
+	public function onClickAir(Player $player, Vector3 $directionVector): ItemUseResult {
+		// Check the cool down to prevent spam abuse
 		if($player->hasItemCooldown($this)) return ItemUseResult::FAIL();
 		$player->resetItemCooldown($this);
 
@@ -47,27 +44,18 @@ class FishingRod extends Durable {
 		if(!FishingRodManager::getItemSpend()) $this->setUnbreakable();
 
 		if(!FishingRodManager::isFishing($player)) {
-			$hook = new FishingHook($player->getLocation(), $player);
+			$location = $player->getLocation();
+			
+			$hook = new FishingHook(Location::fromObject($player->getEyePos(), $player->getWorld(), $location->yaw, $location->pitch), $player);
 			$hook->spawnToAll();
-			// FishingRodManager::setFishing($player, $hook);
-			$player->sendMessage("Hook spawned"); // Debug
 
 			$this->applyDamage(1);
 		} else {
-			FishingRodManager::getFishingHook($player)->flagForDespawn();
-			// FishingRodManager::unsetFishing($player);
-
-			$player->sendMessage("Hook despawned"); // Debug
+			if(!FishingRodManager::getFishingHook($player)->isFlaggedForDespawn()) FishingRodManager::getFishingHook($player)->flagForDespawn();
 		}
-		$player->sendMessage("END OF EVENT"); // Debug
 
 		$player->broadcastAnimation(new ArmSwingAnimation($player));
 
 		return ItemUseResult::SUCCESS();
-	}
-
-	public function getThrowForce(): float
-	{
-		return 0.9;
 	}
 }
