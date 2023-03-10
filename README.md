@@ -15,18 +15,6 @@ Please see [CONTRIBUTING](https://github.com/MXJosueDev/FishingRod/blob/main/CON
 ### API
 
 #### **Get the fishing rod**
-- Plugin API method
-```php
-<?php
-
-use fishingrod\FishingRodManager; /* Class where the API methods are. */
-
-$damage = 0; /* Damage that will be applied to the item when it is returned. */
-
-/* Note: All parameters are optional and already have a default value. */
-$fishingRod = FishingRodManager::get($damage); /* Final item that you can add to any inventory. */
-```
-- PocketMine API method
 ```php
 <?php
 

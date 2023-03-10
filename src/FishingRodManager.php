@@ -19,7 +19,6 @@ use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\World;
 use pocketmine\utils\SingletonTrait;
-use pocketmine\item\VanillaItems;
 use pocketmine\item\ItemFactory;
 use pocketmine\item\ItemIdentifier;
 use pocketmine\item\ItemIds;
@@ -52,16 +51,6 @@ class FishingRodManager {
 		EntityFactory::getInstance()->register(FishingHook::class, function(World $world, CompoundTag $nbt): FishingHook {
 			return new FishingHook(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
 		}, ['FishingHook'], EntityLegacyIds::FISHING_HOOK);
-	}
-
-	/**
-	 * Get the fishing rod
-	 *
-	 * @param  int              $damage Damage with which the item will be returned
-	 * @return FishingRod
-	 */
-	public static function get(int $damage = 0): FishingRod {
-		return VanillaItems::FISHING_ROD()->setDamage($damage);
 	}
 	
 	public static function initConfig(): void {
