@@ -1,4 +1,4 @@
-[![](https://poggit.pmmp.io/shield.state/FishingRod)](https://poggit.pmmp.io/p/FishingRod) [![](https://poggit.pmmp.io/shield.api/FishingRod)](https://poggit.pmmp.io/p/FishingRod)
+[![](https://poggit.pmmp.io/shield.state/FishingRod)](https://poggit.pmmp.io/p/FishingRod) [![](https://poggit.pmmp.io/shield.api/FishingRod)](https://poggit.pmmp.io/p/FishingRod) [![](https://poggit.pmmp.io/shield.downloads/FishingRod)](https://poggit.pmmp.io/p/FishingRod)
 # FishingRod
 
 FishingRod is an open source plugin and is made for [PocketMine-MP](https://github.com/pmmp/PocketMine-MP) 4.x.x.
