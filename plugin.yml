@@ -3,7 +3,7 @@ name: "FishingRod"
 description: "Fishing Rod for PvP, plugin for Pocketmine-MP."
 src-namespace-prefix: "fishingrod"
 version: "1.0"
-main: "fishingrod\Loader"
+main: fishingrod\Loader
 api: "4.0.0"
 author: "MXJosueDev"
 website: "https://github.com/MXJosueDev/FishingRod"
