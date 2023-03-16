@@ -10,10 +10,10 @@ declare(strict_types=1);
  *                            |___/                  
  */
 
-namespace fishingrod\entity;
+namespace MXJosueDev\fishingrod\entity;
 
-use fishingrod\FishingRodManager;
-use fishingrod\item\FishingRod;
+use MXJosueDev\fishingrod\FishingRodManager;
+use MXJosueDev\fishingrod\item\FishingRod;
 use pocketmine\entity\Living;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;

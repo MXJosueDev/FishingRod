@@ -10,10 +10,10 @@ declare(strict_types=1);
  *                            |___/                  
  */
 
-namespace fishingrod;
+namespace MXJosueDev\fishingrod;
 
-use fishingrod\item\FishingRod;
-use fishingrod\entity\FishingHook;
+use MXJosueDev\fishingrod\item\FishingRod;
+use MXJosueDev\fishingrod\entity\FishingHook;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\player\Player;
 use pocketmine\Server;

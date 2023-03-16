@@ -10,10 +10,10 @@ declare(strict_types=1);
  *                            |___/                  
  */
 
-namespace fishingrod\item;
+namespace MXJosueDev\fishingrod\item;
 
-use fishingrod\FishingRodManager;
-use fishingrod\entity\FishingHook;
+use MXJosueDev\fishingrod\FishingRodManager;
+use MXJosueDev\fishingrod\entity\FishingHook;
 use pocketmine\entity\Location;
 use pocketmine\player\Player;
 use pocketmine\math\Vector3;

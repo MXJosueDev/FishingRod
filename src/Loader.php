@@ -10,7 +10,7 @@ declare(strict_types=1);
  *                            |___/                  
  */
 
-namespace fishingrod;
+namespace MXJosueDev\fishingrod;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;

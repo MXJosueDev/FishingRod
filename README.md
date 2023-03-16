@@ -28,7 +28,7 @@ $fishingRod = VanillaItems::FISHING_ROD(); /* Final item that you can add to any
 ```php
 <?php
 
-use fishingrod\FishingRodManager; /* Class where the API methods are. */
+use MXJosueDev\fishingrod\FishingRodManager; /* Class where the API methods are. */
 use pocketmine\Server;
 
 $player = Server::getInstance()->getPlayerExact("iMXJosue"); /* Player example with instance of 'pocketmine/player/Player'. */
