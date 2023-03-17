@@ -36,6 +36,10 @@ $player = Server::getInstance()->getPlayerExact("iMXJosue"); /* Player example w
 $isFishing = FishingRodManager::isFishing($player); /* Returns a boolean value indicating if the player is fishing. */
 ```
 
+## Attributions
+
+Plugin Icon: <a href="https://www.flaticon.com/free-icons/fishing-rod" title="fishing rod icons">Fishing rod icons created by bqlqn - Flaticon</a>
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
