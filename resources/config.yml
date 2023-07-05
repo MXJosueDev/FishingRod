@@ -7,24 +7,31 @@
 
 ---
 # For internal use, DO NOT MODIFY
-config-version: "1.1"
+config-version: "1.2"
 
 # ------------------
 # - Item settings. -
 # ------------------
 
 # Fishing rod item.
+# Note: Due to changes in the PocketMine-MP API from version 4 to 
+# version 5, now it is not possible to modify some properties of 
+# the items that are obtained through pocketmine\item\VanillaItems, 
+# now, to preserve these custom properties it is recommended to 
+# use the method of the Plugin API. (The "max-durability" property 
+# is the only one that now cannot be customized if it is obtained 
+# by VanillaItems)
 fishingrod-item:
   # Ticks that delay the use of the item. (Recommended in the default value to avoid spam)
   # Default: 8
   cooldown-ticks: 8
   # Default: 384
-  max-durability: 384
+  max-durability: 384 # It only works if the item is obtained by the plugin API.
   # Is the item spent when used?
   # Default: false
   spend-with-use: false
 
-# Fishing rod hook. (Entity)
+# Fishing rod hook. (Projectile)
 fishingrod-hook:
   # It's the force with which the hook falls.
   # Default: 0.1
