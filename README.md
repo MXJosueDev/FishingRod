@@ -4,7 +4,7 @@
 
 FishingRod is an open source plugin and is made for [PocketMine-MP](https://github.com/pmmp/PocketMine-MP) 5.x.x.
 
-Note: The fishing rod is designed for PvP and not for fishing.
+Note: The fishing rod of this plugin is designed for PvP and not for fishing.
 
 ## Installation
 
@@ -19,27 +19,28 @@ Please see [CONTRIBUTING](https://github.com/MXJosueDev/FishingRod/blob/main/CON
 
 #### Get the fishing rod
 
-Due to changes in the PocketMine-MP API from version 4 to version 5, now it is not possible to modify some properties of the items that are obtained through pocketmine\item\VanillaItems, now, to preserve these custom properties it is recommended to use the method of the Plugin API. (The "max-durability" property is the only one that now cannot be customized if it is obtained by VanillaItems)
+Due to some changes from PM 4 to 5, items obtained using `pocketmine\item\VanillaItems` do not allow modifying the `"max-durability"` property, to keep the value set in the configuration it is recommended to use the Plugin API method to get the item.
 
 ##### VanillaItems
 ```php
 <?php
 
-use pocketmine\item\VanillaItems; /* Class that contains the methods of the API. */
+use pocketmine\item\VanillaItems;
 
-$fishingRod = VanillaItems::FISHING_ROD(); /* Final item that you can add to any inventory. */
+$fishingRod = VanillaItems::FISHING_ROD();
 ```
 
 ##### Plugin API
 ```php
 <?php
 
-use MXJosueDev\fishingrod\FishingRodManager; /* Class that contains the methods of the API. */
+use MXJosueDev\fishingrod\FishingRodManager; /* API Class */
 
-$fishingRod = FishingRodManager::getFishingRod(); /* Final item that you can add to any inventory. */
+$fishingRod = FishingRodManager::getFishingRod(); /* The Item with custom durability. */
 ```
 
-#### Know if a player is fishing
+#### Is a player fishing
+<sup>Why you should know it? LOL</sup>
 
 ```php
 <?php
@@ -47,9 +48,9 @@ $fishingRod = FishingRodManager::getFishingRod(); /* Final item that you can add
 use MXJosueDev\fishingrod\FishingRodManager; /* Class where the API methods are. */
 use pocketmine\Server;
 
-$player = Server::getInstance()->getPlayerExact("iMXJosue"); /* Player example with instance of 'pocketmine/player/Player'. */
+$player = Server::getInstance()->getPlayerExact("iMXJosue"); /* Object with instance of 'pocketmine/player/Player'. */
 
-$isFishing = FishingRodManager::getInstance()->isFishing($player); /* Returns a boolean value indicating if the player is fishing. */
+$isFishing = FishingRodManager::getInstance()->isFishing($player); /* Returns true/false */
 ```
 
 ## Attributions
@@ -59,4 +60,4 @@ created by bqlqn - Flaticon</a>
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
